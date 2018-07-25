@@ -1,5 +1,7 @@
 import time
 import json
+import requests
+from requests_ntlm import HttpNtlmAuth
 from session_id import get_session_id
 
 
@@ -21,7 +23,7 @@ class Pyteryx(object):
 			'cache-control': 'no-cache',
     		}
 
-	def get_all_private_workflows(search=None, limit=None, offset=None, package_type=None):
+	def get_all_private_workflows(self, search=None, limit=None, offset=None, package_type=None):
 		# gets all workflows from private/collection/district
 		params = (
 			('search', search),
@@ -32,8 +34,8 @@ class Pyteryx(object):
 		)
 		
 		response = requests.get(self.hostname + '/gallery/api/apps/studio/',
-					auth=HttpNtlmAuth(self.user, self.pwrd),
-					headers=headers,
+					auth=HttpNtlmAuth(self.username, self.password),
+					headers=self.headers,
 					params=params)
 		
 		private_workflows = {
@@ -47,7 +49,7 @@ class Pyteryx(object):
 		# get the details of a workflow based on an ID
 		pass
 
-	def run_workflow(id, *args=[], **kwargs={}):
+	def run_workflow(id):
 		# run a workflow
 		for key, value in kwargs:
 			print(key, value)
