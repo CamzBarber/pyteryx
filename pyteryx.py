@@ -24,7 +24,6 @@ class Pyteryx(object):
     		}
 
 	def get_all_private_workflows(self, search=None, limit=None, offset=None, package_type=None):
-		# gets all workflows from private/collection/district
 		params = (
 			('search', search),
 			('limit', limit),
@@ -45,6 +44,24 @@ class Pyteryx(object):
 		
 		return private_workflows
 
+	def get_all_collection_workflows(self, appLimit=None):
+		params = (
+			('appLimit', '5'),
+			('_', str(int(round(time.time() * 1000)))),
+		)
+		
+		response = requests.get(self.hostname + '/gallery/api/collections/',
+					auth=HttpNtlmAuth(self.username, self.password),
+					headers=self.headers,
+					params=params)
+		
+		collection_workflows = {
+			'status' : response.status_code,
+			'response' : response.json()
+		}
+		
+		return collection_workflows
+	
 	def get_workflow_info(id):
 		# get the details of a workflow based on an ID
 		pass
