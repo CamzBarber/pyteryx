@@ -121,6 +121,24 @@ class Pyteryx(object):
 		
 		return workflow_info
 
+	
+	def get_workflow_status(self, instance_id):
+		params = (
+        		('_', int(millis)),
+		)
+		
+		response = requests.get(self.hostname + '/gallery/api/apps/jobs/' + instance_id + '/',
+			auth=HttpNtlmAuth(self.username, self.password),
+			headers=self.headers,
+			params=params)
+		
+		workflow_status = {
+			'status' : response.status_code,
+			'results' : response.json()
+		}
+		
+		return workflow_status
+		
 	def run_workflow_get_result(id):
 		# comment
 		pass
