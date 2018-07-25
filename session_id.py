@@ -1,3 +1,6 @@
+import json
+import requests
+from requests_ntlm import HttpNtlmAuth
 # host: http://...
 def get_session_id(host, user, pwrd):
     headers = {
