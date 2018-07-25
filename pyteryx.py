@@ -62,9 +62,17 @@ class Pyteryx(object):
 		
 		return collection_workflows
 	
-	def get_workflow_info(id):
-		# get the details of a workflow based on an ID
-		pass
+	def get_workflow_info(self, app_id):
+		response = requests.get(self.hostname + '/gallery/api/apps/' + app_id + '/',
+					auth=HttpNtlmAuth(self.username, self.password),
+					headers=self.headers)
+		
+		workflow_info = {
+			'status' : response.status_code,
+			'results' : response.json()
+		}
+		
+		return workflow_info
 
 	def run_workflow(id):
 		# run a workflow
