@@ -39,7 +39,7 @@ class Pyteryx(object):
 		
 		private_workflows = {
 			'status' : response.status_code,
-			'response' : response.json()
+			'results' : response.json()
 		}
 		
 		return private_workflows
@@ -57,7 +57,7 @@ class Pyteryx(object):
 		
 		collection_workflows = {
 			'status' : response.status_code,
-			'response' : response.json()
+			'results' : response.json()
 		}
 		
 		return collection_workflows
