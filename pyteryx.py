@@ -1,10 +1,12 @@
+from session_id import get_session_id
+
 class Pyteryx(object):
 	"""docstring for AlterPyx"""
 	def __init__(self, host, user, pwrd):
 		self.hostname = host
 		self.username = user
 		self.password = pwrd
-		self.sessionID = get_sessionID(self.hostname, self.username, self.password)
+		self.sessionID = get_session_id(self.hostname, self.username, self.password)
 
 	def get_all_workflows(workspace):
 		# gets all workflows from private/collection/district
