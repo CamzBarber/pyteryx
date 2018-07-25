@@ -19,26 +19,29 @@ class Pyteryx(object):
 			'X-Authorization': self.session_id,
 			'Connection': 'keep-alive',
 			'cache-control': 'no-cache',
-    	}
+    		}
 
 	def get_all_private_workflows(search=None, limit=None, offset=None, package_type=None):
 		# gets all workflows from private/collection/district
-		millis = int(round(time.time() * 1000))
-		
 		params = (
 			('search', search),
 			('limit', limit),
 			('offset', offset),
 			('packageType', package_type),
-			('_', str(millis)),
+			('_', str(int(round(time.time() * 1000)))),
 		)
 		
 		response = requests.get(self.hostname + '/gallery/api/apps/studio/',
-								auth=HttpNtlmAuth(self.user, self.pwrd),
-								headers=headers,
-								params=params)
+					auth=HttpNtlmAuth(self.user, self.pwrd),
+					headers=headers,
+					params=params)
 		
-		return response.status_code, response.json()
+		private_workflows = {
+			'status' : response.status_code,
+			'response' : response.json()
+		}
+		
+		return private_workflows
 
 	def get_workflow_info(id):
 		# get the details of a workflow based on an ID
