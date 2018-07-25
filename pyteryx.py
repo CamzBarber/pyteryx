@@ -82,7 +82,7 @@ class Pyteryx(object):
 	def get_workflow_questions(self, app_id):
 		params = (
 			('useDefaultCredentials', 'true'),
-			('_', int(millis)),
+			('_', str(int(round(time.time() * 1000)))),
 		)
 		
 		response = requests.get(self.hostname + '/gallery/api/apps/',
@@ -124,7 +124,7 @@ class Pyteryx(object):
 	
 	def get_workflow_status(self, instance_id):
 		params = (
-        		('_', int(millis)),
+        		('_', str(int(round(time.time() * 1000)))),
 		)
 		
 		response = requests.get(self.hostname + '/gallery/api/apps/jobs/' + instance_id + '/',
