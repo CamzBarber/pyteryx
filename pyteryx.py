@@ -7,6 +7,7 @@ from session_id import get_session_id
 
 class Pyteryx(object):
 	"""docstring for AlterPyx"""
+	
 	def __init__(self, host, user, pwrd):
 		self.hostname = host
 		self.username = user
@@ -23,6 +24,7 @@ class Pyteryx(object):
 			'cache-control': 'no-cache',
     		}
 
+		
 	def get_all_private_workflows(self, search=None, limit=None, offset=None, package_type=None):
 		params = (
 			('search', search),
@@ -44,6 +46,7 @@ class Pyteryx(object):
 		
 		return private_workflows
 
+	
 	def get_all_collection_workflows(self, appLimit=None):
 		params = (
 			('appLimit', '5'),
@@ -62,6 +65,7 @@ class Pyteryx(object):
 		
 		return collection_workflows
 	
+	
 	def get_workflow_info(self, app_id):
 		response = requests.get(self.hostname + '/gallery/api/apps/' + app_id + '/',
 					auth=HttpNtlmAuth(self.username, self.password),
@@ -75,6 +79,25 @@ class Pyteryx(object):
 		return workflow_info
 
 	
+	def get_workflow_questions(self, app_id):
+		params = (
+			('useDefaultCredentials', 'true'),
+			('_', int(millis)),
+		)
+		
+		response = requests.get(self.hostname + '/gallery/api/apps/',
+					auth=HttpNtlmAuth(self.username, self.password),
+					headers=self.headers,
+				       	params=params)
+		
+		workflow_questions = {
+			'status' : response.status_code,
+			'results' : response.json()
+		}
+		
+		return workflow_questions
+		
+		
 	def run_workflow(self, app_id, questions):
 		data = {
 			"appPackage": {
