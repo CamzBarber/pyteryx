@@ -74,10 +74,29 @@ class Pyteryx(object):
 		
 		return workflow_info
 
-	def run_workflow(id):
-		# run a workflow
-		for key, value in kwargs:
-			print(key, value)
+	
+	def run_workflow(self, app_id, questions):
+		data = {
+			"appPackage": {
+				"id": app_id
+			},
+			"jobName": "",
+			"useDefaultCredentials": True,
+			"version": "",
+			"questions": questions
+		}
+		
+		response = requests.post(self.hostname + '/gallery/api/apps/jobs/',
+					auth=HttpNtlmAuth(self.username, self.password),
+					headers=self.headers,
+				       	data=json.dumps(data))
+		
+		workflow_info = {
+			'status' : response.status_code,
+			'results' : response.json()
+		}
+		
+		return workflow_info
 
 	def run_workflow_get_result(id):
 		# comment
