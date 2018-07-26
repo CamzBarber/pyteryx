@@ -1,7 +1,7 @@
 import json
 import requests
 from requests_ntlm import HttpNtlmAuth
-# host: http://...
+
 def get_session_id(host, user, pwrd):
     headers = {
         'Connection': 'keep-alive',
@@ -16,12 +16,10 @@ def get_session_id(host, user, pwrd):
 
     data = {'scheme': 'windows', 'parameters': [{'name': 'updateLastLoginDate', 'value': True}]}
 
-    data = json.dumps(data, separators=(',', ':'))
-
     response = requests.post(host + '/gallery/api/auth/sessions/',
                              auth=HttpNtlmAuth(user, pwrd),
-                             data=data,
-                             headers=headers)
+                             headers=headers,
+                             data=json.dumps(data))
 
     session_id = 'SPECIAL ' + response.json()['sessionId']
     return session_id
