@@ -1,6 +1,6 @@
 # Pyteryx
 
-A reverse engineered Alteryx REST API Python wrapper for the following additional functionality over their official API:
+A reverse engineered Alteryx Server API wrapper for Python. It adds the following functionality over their official API:
 - Run workflow as user (inherits all your access to data connections and files).
 - Run workflows from anywhere (not just your private studio).
 - Run without having access to the API credentials (e.g. in a corporate environment).
