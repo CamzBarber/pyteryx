@@ -37,18 +37,15 @@ Where to get URL, domain etc
 Import the Pyteryx Object
 ```
 from pyteryx import Pyteryx
-
 ```
 Initialise the Pyteryx Object
 ```
 px = Pyteryx("http(s)://domain-servername1", "username", "password")
-
 ```
 Listing workflows
 ```
 px.get_all_collection_workflows()
 px.get_all_private_workflows()
-
 ```
 
 ## Authors
@@ -56,7 +53,7 @@ px.get_all_private_workflows()
 * **Cameron Barber**  - *Initial work* - [PwC](https://github.com/camzbarber)
 * **Jack Marsh**      - *Initial work* - [HI](https://github.com/jackmarsh)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/CamzBarber/Pyteryx/contributors) who participated in this project.
 
 ## License
 
