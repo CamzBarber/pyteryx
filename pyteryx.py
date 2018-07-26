@@ -6,7 +6,6 @@ from .session_id import get_session_id
 
 
 class Pyteryx(object):
-	"""docstring for AlterPyx"""
 	
 	def __init__(self, host, user, pwrd):
 		self.hostname = host
@@ -23,7 +22,7 @@ class Pyteryx(object):
 			'Connection': 'keep-alive',
 			'cache-control': 'no-cache',
 			'Content-Type': 'application/json',
-    		}
+    	}
 
 
 	def get_all_private_workflows(self, search=None, limit=None, offset=None, package_type=None):
@@ -36,9 +35,9 @@ class Pyteryx(object):
 		)
 		
 		response = requests.get(self.hostname + '/gallery/api/apps/studio/',
-					auth=HttpNtlmAuth(self.username, self.password),
-					headers=self.headers,
-					params=params)
+								auth=HttpNtlmAuth(self.username, self.password),
+								headers=self.headers,
+								params=params)
 		
 		private_workflows = {
 			'status' : response.status_code,
@@ -55,10 +54,10 @@ class Pyteryx(object):
 		)
 		
 		response = requests.get(self.hostname + '/gallery/api/collections/',
-					auth=HttpNtlmAuth(self.username, self.password),
-					headers=self.headers,
-					params=params)
-		
+								auth=HttpNtlmAuth(self.username, self.password),
+								headers=self.headers,
+								params=params)
+
 		collection_workflows = {
 			'status' : response.status_code,
 			'results' : response.json()
@@ -69,8 +68,8 @@ class Pyteryx(object):
 	
 	def get_workflow_info(self, app_id):
 		response = requests.get(self.hostname + '/gallery/api/apps/' + app_id + '/',
-					auth=HttpNtlmAuth(self.username, self.password),
-					headers=self.headers)
+								auth=HttpNtlmAuth(self.username, self.password),
+								headers=self.headers)
 		
 		workflow_info = {
 			'status' : response.status_code,
@@ -87,10 +86,10 @@ class Pyteryx(object):
 		)
 		
 		response = requests.get(self.hostname + '/gallery/api/apps/' + app_id + '/interface',
-					auth=HttpNtlmAuth(self.username, self.password),
-					headers=self.headers,
-				    params=params)
-		
+								auth=HttpNtlmAuth(self.username, self.password),
+								headers=self.headers,
+								params=params)
+
 		workflow_questions = {
 			'status' : response.status_code,
 			'results' : response.json()
@@ -101,19 +100,19 @@ class Pyteryx(object):
 		
 	def run_workflow(self, app_id, questions=None):
 		data = {
-			"appPackage": {
-				"id": app_id
+			'appPackage': {
+				'id': app_id
 			},
-			"jobName": "",
-			"useDefaultCredentials": True,
-			"version": "",
-			"questions": questions
+			'jobName': '',
+			'useDefaultCredentials': True,
+			'version': '',
+			'questions': questions
 		}
 		
 		response = requests.post(self.hostname + '/gallery/api/apps/jobs/',
-					auth=HttpNtlmAuth(self.username, self.password),
-					headers=self.headers,
-				    data=json.dumps(data))
+								auth=HttpNtlmAuth(self.username, self.password),
+								headers=self.headers,
+								data=json.dumps(data))
 		
 		workflow_info = {
 			'status' : response.status_code,
@@ -125,13 +124,13 @@ class Pyteryx(object):
 	
 	def get_workflow_status(self, instance_id):
 		params = (
-        		('_', str(int(round(time.time() * 1000)))),
+        	('_', str(int(round(time.time() * 1000)))),
 		)
 		
 		response = requests.get(self.hostname + '/gallery/api/apps/jobs/' + instance_id + '/',
-					auth=HttpNtlmAuth(self.username, self.password),
-					headers=self.headers,
-					params=params)
+								auth=HttpNtlmAuth(self.username, self.password),
+								headers=self.headers,
+								params=params)
 		
 		workflow_status = {
 			'status' : response.status_code,
@@ -139,7 +138,15 @@ class Pyteryx(object):
 		}
 		
 		return workflow_status
-		
-	def run_workflow_get_result(id):
-		# comment
-		pass
+
+
+	def run_workflow_get_result(self, app_id, questions=None):
+		instance_id = self.run_workflow(app_id, questions)
+		status_flag = None
+		while status_flag != 'Completed':
+			status = self.get_workflow_status(instance_id['results']['id'])
+			status_flag = status['results']['status']
+			print(status['results']['status'], status['results']['disposition'])
+			time.sleep(1)
+
+		return status # is this the right thing to return? return the output from a job? (need a job output function)
