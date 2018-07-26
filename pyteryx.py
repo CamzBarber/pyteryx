@@ -2,7 +2,7 @@ import time
 import json
 import requests
 from requests_ntlm import HttpNtlmAuth
-from session_id import get_session_id
+from .session_id import get_session_id
 
 
 class Pyteryx(object):
@@ -22,9 +22,10 @@ class Pyteryx(object):
 			'X-Authorization': self.session_id,
 			'Connection': 'keep-alive',
 			'cache-control': 'no-cache',
+			'Content-Type': 'application/json',
     		}
 
-		
+
 	def get_all_private_workflows(self, search=None, limit=None, offset=None, package_type=None):
 		params = (
 			('search', search),
@@ -85,10 +86,10 @@ class Pyteryx(object):
 			('_', str(int(round(time.time() * 1000)))),
 		)
 		
-		response = requests.get(self.hostname + '/gallery/api/apps/',
+		response = requests.get(self.hostname + '/gallery/api/apps/' + app_id + '/interface',
 					auth=HttpNtlmAuth(self.username, self.password),
 					headers=self.headers,
-				       	params=params)
+				    params=params)
 		
 		workflow_questions = {
 			'status' : response.status_code,
@@ -98,7 +99,7 @@ class Pyteryx(object):
 		return workflow_questions
 		
 		
-	def run_workflow(self, app_id, questions):
+	def run_workflow(self, app_id, questions=None):
 		data = {
 			"appPackage": {
 				"id": app_id
@@ -112,7 +113,7 @@ class Pyteryx(object):
 		response = requests.post(self.hostname + '/gallery/api/apps/jobs/',
 					auth=HttpNtlmAuth(self.username, self.password),
 					headers=self.headers,
-				       	data=json.dumps(data))
+				    data=json.dumps(data))
 		
 		workflow_info = {
 			'status' : response.status_code,
@@ -128,9 +129,9 @@ class Pyteryx(object):
 		)
 		
 		response = requests.get(self.hostname + '/gallery/api/apps/jobs/' + instance_id + '/',
-			auth=HttpNtlmAuth(self.username, self.password),
-			headers=self.headers,
-			params=params)
+					auth=HttpNtlmAuth(self.username, self.password),
+					headers=self.headers,
+					params=params)
 		
 		workflow_status = {
 			'status' : response.status_code,
