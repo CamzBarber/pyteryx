@@ -216,7 +216,7 @@ class Pyteryx(object):
 			'results' : workflow_data
 		}
 
-		return workflow_data
+		return workflow_data # should this return dataframe?
 
 
 	def run_workflow_get_result(self, app_id, questions=None):
