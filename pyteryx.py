@@ -12,28 +12,14 @@ class Pyteryx(object):
 		self.password = pwrd
 		self.session_id = self.__get_session_id(self.hostname, self.username, self.password)
 		self.headers = {
-			'Accept-Encoding': 'gzip, deflate',
-			'X-Requested-With': 'XMLHttpRequest',
-			'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8',
-			'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36',
-			'Accept': 'application/json, text/javascript, */*; q=0.01',
 			'X-Authorization': self.session_id,
-			'Connection': 'keep-alive',
-			'cache-control': 'no-cache',
 			'Content-Type': 'application/json',
     	}
 
 
 	def __get_session_id(self, host, user, pwrd):
 		headers = {
-			'Connection': 'keep-alive',
-			'Accept': '*/*',
-			'cache-control': 'no-cache',
-			'X-Requested-With': 'XMLHttpRequest',
-			'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36',
 			'Content-Type': 'application/json',
-			'Accept-Encoding': 'gzip, deflate',
-			'Accept-Language': 'en-GB,en-US;q=0.9,en;q=0.8',
 		}
 
 		data = {'scheme': 'windows', 'parameters': [{'name': 'updateLastLoginDate', 'value': True}]}
