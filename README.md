@@ -34,15 +34,16 @@ git clone something
 
 Where to get URL, domain etc
 
-Import the Pyteryx Object
+Import the Pyteryx Object:
 ```
 >>> from pyteryx import Pyteryx
 ```
-Initialise the Pyteryx Object
+Initialise the Pyteryx Object:
 ```
 >>> px = Pyteryx("http(s)://domain-servername1", "username", "password")
 ```
-Listing workflows
+Below are examples of the funcitonality of 
+the Pyteryx object with their respective outputs:
 ```
 >>> px.get_all_collection_workflows()
 output example
