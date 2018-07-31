@@ -22,7 +22,7 @@ Python 3.x. Uses requests_NTLM, etc.
 Using pip (Not working yet)
 
 ```
-pip install pyteryx
+$ pip install pyteryx
 ```
 
 Using git 
@@ -36,16 +36,31 @@ Where to get URL, domain etc
 
 Import the Pyteryx Object
 ```
-from pyteryx import Pyteryx
+>>> from pyteryx import Pyteryx
 ```
 Initialise the Pyteryx Object
 ```
-px = Pyteryx("http(s)://domain-servername1", "username", "password")
+>>> px = Pyteryx("http(s)://domain-servername1", "username", "password")
 ```
 Listing workflows
 ```
-px.get_all_collection_workflows()
-px.get_all_private_workflows()
+>>> px.get_all_collection_workflows()
+output example
+
+>>> px.get_all_private_workflows()
+output example
+
+>>> px.get_workflow_info()
+output example
+
+>>> px.get_workflow_questions()
+output example
+
+>>> px.get_workflow_status()
+output example
+
+>>> px.run_workflow_get_result()
+output example
 ```
 
 ## Authors
