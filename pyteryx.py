@@ -1,7 +1,13 @@
 import time
 import json
+import sys
 import requests
 from requests_ntlm import HttpNtlmAuth
+from pandas import read_csv
+if sys.version_info[0] < 3:
+    from StringIO import StringIO
+else:
+    from io import StringIO
 
 
 class Pyteryx(object):
@@ -48,8 +54,8 @@ class Pyteryx(object):
 								params=params)
 		
 		private_workflows = {
-			'status' : response.status_code,
-			'results' : response.json()
+			'status': response.status_code,
+			'results': response.json()
 		}
 		
 		return private_workflows
@@ -67,8 +73,8 @@ class Pyteryx(object):
 								params=params)
 
 		collection_workflows = {
-			'status' : response.status_code,
-			'results' : response.json()
+			'status': response.status_code,
+			'results': response.json()
 		}
 		
 		return collection_workflows
@@ -80,8 +86,8 @@ class Pyteryx(object):
 								headers=self.headers)
 		
 		workflow_info = {
-			'status' : response.status_code,
-			'results' : response.json()
+			'status': response.status_code,
+			'results': response.json()
 		}
 		
 		return workflow_info
@@ -99,8 +105,8 @@ class Pyteryx(object):
 								params=params)
 
 		workflow_questions = {
-			'status' : response.status_code,
-			'results' : response.json()
+			'status': response.status_code,
+			'results': response.json()
 		}
 		
 		return workflow_questions
@@ -123,8 +129,8 @@ class Pyteryx(object):
 								data=json.dumps(data))
 		
 		workflow_info = {
-			'status' : response.status_code,
-			'results' : response.json()
+			'status': response.status_code,
+			'results': response.json()
 		}
 		
 		return workflow_info
@@ -141,8 +147,8 @@ class Pyteryx(object):
 								params=params)
 		
 		workflow_status = {
-			'status' : response.status_code,
-			'results' : response.json()
+			'status': response.status_code,
+			'results': response.json()
 		}
 		
 		return workflow_status
@@ -158,9 +164,12 @@ class Pyteryx(object):
 								headers=self.headers,
 								params=params)
 
-		outputs = [x['id'] for x in response.json()]
+		workflow_output = {
+			'status': response.status_code,
+			'results': [x['id'] for x in response.json()]
+		}
 
-		return outputs
+		return workflow_output
 
 
 	def __get_workflow_output_token(self):
@@ -173,7 +182,12 @@ class Pyteryx(object):
 								headers=self.headers,
 								params=params)
 
-		return response.json()['token']
+		workflow_token = {
+			'status': response.status_code,
+			'results': response.json()['token']
+		}
+
+		return workflow_token
 
 
 	def __get_workflow_data(self, token, instance_id, output_id):
@@ -187,22 +201,29 @@ class Pyteryx(object):
 								headers=self.headers,
 								params=params)
 
-		return response.text
+		workflow_data = {
+			'status': response.status_code,
+			'results': response.text
+		}
+
+		return workflow_data
 
 
 	def get_workflow_result(self, instance_id):
 		output_ids = self.__get_workflow_output(instance_id)
 		workflow_data = []
-		if len(output_ids) >= 1:
+		if len(output_ids['results']) >= 1:
 			output_token = self.__get_workflow_output_token()
-			for i in output_ids:
-				workflow_data.append(self.__get_workflow_data(output_token, instance_id, i))
+			for i in output_ids['results']:
+				workflow_content = self.__get_workflow_data(output_token['results'], instance_id, i)
+				workflow_data.append(read_csv(StringIO(workflow_content['results'])))
 
-		workflow_data = {
-			'results' : workflow_data
+		workflow_output = {
+			'status': workflow_content['status'],
+			'results': workflow_data
 		}
 
-		return workflow_data # should this return dataframe?
+		return workflow_output
 
 
 	def run_workflow_get_result(self, app_id, questions=None):
