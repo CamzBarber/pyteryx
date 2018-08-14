@@ -7,19 +7,21 @@ A reverse engineered RESTful Alteryx Server API for Python. It adds the followin
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
-
 ### Requirements
 
-Alteryx Server, windows auth etc.
+- Alteryx Server
+- Windows Authentication (NTLM) on Alteryx Server
 
 ### Prerequisites
 
-Python 3.x. Uses requests_NTLM, etc.
+- Python 3
+- Requests_NTLM
+- Pandas
+- StringIO
 
 ### Installing
 
-Using pip (Not working yet)
+Using pip (Coming soon)
 
 ```
 $ pip install pyteryx
@@ -66,8 +68,8 @@ output example
 
 ## Authors
 
-* **Cameron Barber**  - *Initial work* - [PwC](https://github.com/camzbarber)
-* **Jack Marsh**      - *Initial work* - [HI](https://github.com/jackmarsh)
+* **Cameron Barber**  - *Initial work* - [CamzBarber](https://github.com/camzbarber)
+* **Jack Marsh**      - *Initial work* - [JackMarsh](https://github.com/jackmarsh)
 
 See also the list of [contributors](https://github.com/CamzBarber/Pyteryx/contributors) who participated in this project.
 
