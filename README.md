@@ -17,7 +17,6 @@ A reverse engineered RESTful Alteryx Server API for Python. It adds the followin
 - Python 3
 - Requests_NTLM
 - Pandas
-- StringIO
 
 ### Installing
 
