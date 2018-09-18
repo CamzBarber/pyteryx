@@ -28,7 +28,7 @@ $ pip install pyteryx
 
 Using git 
 ```
-git clone something
+git clone (coming soon...)
 ```
 
 ### How to use 
@@ -75,9 +75,3 @@ See also the list of [contributors](https://github.com/CamzBarber/Pyteryx/contri
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration = Donald Knuth
-* etc
